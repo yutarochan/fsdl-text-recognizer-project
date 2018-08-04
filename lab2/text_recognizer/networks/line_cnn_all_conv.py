@@ -30,6 +30,7 @@ def line_cnn_all_conv(
     # remember that padding is set to 'valid' (by default) in the network above.
 
     ##### Your code below (Lab 2)
+    
 
     ##### Your code above (Lab 2)
     # (num_windows, 128, 1)

@@ -50,7 +50,15 @@ def line_cnn_sliding_window(
     # and watch out that width is at least 2 (else we will only be able to predict on the first half of the line)
 
     ##### Your code below (Lab 2)
-
+    conv_out = Lambda(lambda x: tf.expand_dims(x, -1))(convnet_outputs)
+    
+    num_windows = int((image_width - window_width) / window_stride) + 1
+    width = int(num_windows / output_length)
+    
+    conved_convnet_outputs = Conv2D(num_classes, (width, 128), (width, 1), activation='softmax')(conv_out)
+    squeezed_conved_convnet_outputs = Lambda(lambda x: tf.squeeze(x, 2))(conved_convnet_outputs)
+    softmax_output = Lambda(lambda x: x[:, :output_length, :])(squeezed_conved_convnet_outputs)
+    
     ##### Your code above (Lab 2)
 
     model = KerasModel(inputs=image_input, outputs=softmax_output)
